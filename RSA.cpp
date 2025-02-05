@@ -1,71 +1,80 @@
+// C++ Program for implementation of RSA Algorithm
+
 #include <bits/stdc++.h>
+
 using namespace std;
 
-int power(int x, unsigned int y, int p)
-{
-	int res = 1;	 
-	x = x % p; 
-				
-	while (y > 0)
-	{
-		if (y & 1)
-			res = (res*x) % p;
-
-		// y must be even now
-		y = y>>1; // y = y/2
-		x = (x*x) % p;
-	}
-	return res;
+// Function to compute base^expo mod m
+int power(int base, int expo, int m) {
+    int res = 1;
+    base = base % m;
+    while (expo > 0) {
+        if (expo & 1)
+            res = (res * 1LL * base) % m;
+        base = (base * 1LL * base) % m;
+        expo = expo / 2;
+    }
+    return res;
 }
 
-
-bool miillerTest(int d, int n)
-{
-
-	int a = 2 + rand() % (n - 4);
-
-	int x = power(a, d, n);
-
-	if (x == 1 || x == n-1)
-	return true;
-
-	while (d != n-1)
-	{
-		x = (x * x) % n;
-		d *= 2;
-
-		if (x == 1)	 return false;
-		if (x == n-1) return true;
-	}
-
-	return false;
+// Function to find modular inverse of e modulo phi(n)
+// Here we are calculating phi(n) using Hit and Trial Method
+// but we can optimize it using Extended Euclidean Algorithm
+int modInverse(int e, int phi) {
+    for (int d = 2; d < phi; d++) {
+        if ((e * d) % phi == 1)
+            return d;
+    }
+    return -1;
 }
 
-bool isPrime(int n, int k)
-{
-	if (n <= 1 || n == 4) return false;
-	if (n <= 3) return true;
+// RSA Key Generation
+void generateKeys(int &e, int &d, int &n) {
+    int p = 7919;
+    int q = 1009;
+    
+    n = p * q;
+    int phi = (p - 1) * (q - 1);
 
-	// Find r such that n = 2^d * r + 1 for some r >= 1
-	int d = n - 1;
-	while (d % 2 == 0)
-		d /= 2;
+    // Choose e, where 1 < e < phi(n) and gcd(e, phi(n)) == 1
+    for (e = 2; e < phi; e++) {
+        if (__gcd(e, phi) == 1)
+            break;
+    }
 
-	for (int i = 0; i < k; i++)
-		if (!miillerTest(d, n))
-			return false;
-
-	return true;
+    // Compute d such that e * d ≡ 1 (mod phi(n))
+    d = modInverse(e, phi);
 }
 
-int main()
-{
-	int k = 4;
+// Encrypt message using public key (e, n)
+int encrypt(int m, int e, int n) {
+    return power(m, e, n);
+}
 
-	cout << "All primes smaller than 100: \n";
-	for (int n = 1; n < 100; n++)
-	if (isPrime(n, k))
-		cout << n << " ";
+// Decrypt message using private key (d, n)
+int decrypt(int c, int d, int n) {
+    return power(c, d, n);
+}
 
-	return 0;
+int main() {
+    int e, d, n;
+
+    generateKeys(e, d, n);
+  
+    cout << "Public Key (e, n): (" << e << ", " << n << ")\n";
+    cout << "Private Key (d, n): (" << d << ", " << n << ")\n";
+
+    // Message
+    int M = 888;
+    cout << "Original Message: " << M << endl;
+
+    // Encrypt the message
+    int C = encrypt(M, e, n);
+    cout << "Encrypted Message: " << C << endl;
+
+    // Decrypt the message
+    int decrypted = decrypt(C, d, n);
+    cout << "Decrypted Message: " << decrypted << endl;
+
+    return 0;
 }

@@ -17,8 +17,8 @@ string encrypt(string text, int s)
 }
 
 int main()
-{
-    string text = "AAAAAAAA";
+{   
+    string text = "SUYOG";
     int s = 4;
     cout << "Text : " << text;
     cout << "\nShift: " << s;

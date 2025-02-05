@@ -17,28 +17,28 @@ long long int power(long long int a, long long int b,
 int main()
 {
     long long int P, G, x, a, y, b, ka, kb;
-
-    P = 23; 
+    cout << "HELLMAN" << "\n";
+    P = 20; 
     cout << "The value of P : " << P << endl;
 
-    G = 9; 
+    G = 8; 
     cout << "The value of G : " << G << endl;
 
-    a = 4; 
-    cout << "The private key a for Alice : " << a << endl;
+    a = 8; 
+    cout << "The private key a for Suyog : " << a << endl;
 
     x = power(G, a, P); 
    
-    b = 3;
-    cout << "The private key b for Bob : " << b << endl;
+    b = 4;
+    cout << "The private key b for Hari : " << b << endl;
 
     y = power(G, b, P); 
 
     ka = power(y, a, P); 
     kb = power(x, b, P); 
-    cout << "Secret key for the Alice is : " << ka << endl;
+    cout << "Secret key for the Suyog is : " << ka << endl;
 
-    cout << "Secret key for the Bob is : " << kb << endl;
+    cout << "Secret key for the Hari is : " << kb << endl;
 
     return 0;
 }

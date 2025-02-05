@@ -88,7 +88,8 @@ int main() {
     long long p, g, y, x;
     long long c1, c2;
     long long m = 1234; 
-
+    
+    printf("ELGamal");
     // Key generation
     generate_keys(&p, &g, &y, &x);
     printf("Public Key (p, g, y): (%lld, %lld, %lld)\n", p, g, y);

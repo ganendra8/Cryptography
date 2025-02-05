@@ -64,10 +64,11 @@ string decryptRailFence(string ciphertext, int rails) {
 
 int main() {
     string text;
+
     cout << "Enter the text to encrypt: ";
     getline(cin, text);
 
-    int rails = 4; // Fixed at 4 rails
+    int rails = 4;
 
     string encryptedText = encryptRailFence(text, rails);
     cout << "Encrypted Text: " << encryptedText << endl;

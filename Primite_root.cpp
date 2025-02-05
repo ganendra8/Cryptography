@@ -87,8 +87,9 @@ int findPrimitive(int n)
 
 // Driver code
 int main()
-{
-	int n = 761;
+{	
+	cout << "PRIME_ROOT" << "\n";
+	int n = 827;
 	cout << " Smallest primitive root of " << n
 		<< " is " << findPrimitive(n);
 	return 0;
